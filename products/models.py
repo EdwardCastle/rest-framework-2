@@ -10,3 +10,10 @@ class Product(models.Model):
         db_table = 'Product'
         verbose_name = 'product'
         verbose_name_plural = 'products'
+
+    @property
+    def sale_price(self):
+        return '%.2f' % (float(self.price) * 0.8)
+
+    def get_discount(self):
+        return "122"

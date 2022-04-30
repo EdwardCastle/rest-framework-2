@@ -1,13 +1,17 @@
+from rest_framework.decorators import api_view
+
 from products.models import Product
 from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework import decorators
+
+from products.serializers import ProductSerializer
 
 
+@api_view(['POST'])
 def api_home(request, *args, **kwargs):
-    model_data = Product.objects.all().order_by('?').first()
-    print(model_data)
-    data = {}
-    if model_data:
-        data['title'] = model_data.title
-        data['content'] = model_data.content
-        data['price'] = model_data.price
-    return JsonResponse(data)
+    request = Product.objects.all().first()
+    product = {}
+    if request:
+        product = ProductSerializer(request)
+    return Response(product.data)
