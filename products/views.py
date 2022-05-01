@@ -1,7 +1,8 @@
-from rest_framework import generics
-
+from rest_framework import generics, permissions, authentication
+from rest_framework.permissions import IsAuthenticated
 from .models import Product
 from .serializers import ProductSerializer
+from api.authentication import TokenAuthentication
 
 
 class ProductListAPIView(generics.ListAPIView):
