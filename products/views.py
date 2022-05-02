@@ -1,16 +1,15 @@
-from rest_framework import generics, permissions, authentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 from .models import Product
 from .serializers import ProductSerializer
-from api.authentication import TokenAuthentication
+from api.mixin import StaffEditorPermissionMixin
 
 
-class ProductListAPIView(generics.ListAPIView):
+class ProductListAPIView(generics.ListAPIView, StaffEditorPermissionMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
-class ProductCreateAPIView(generics.CreateAPIView):
+class ProductCreateAPIView(generics.CreateAPIView, StaffEditorPermissionMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -18,12 +17,12 @@ class ProductCreateAPIView(generics.CreateAPIView):
         serializer.save()
 
 
-class ProductDetailAPIView(generics.RetrieveAPIView):
+class ProductDetailAPIView(generics.RetrieveAPIView, StaffEditorPermissionMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
-class ProductUpdateAPIView(generics.UpdateAPIView):
+class ProductUpdateAPIView(generics.UpdateAPIView, StaffEditorPermissionMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
@@ -32,7 +31,7 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
         serializer.save()
 
 
-class ProductDeleteAPIView(generics.DestroyAPIView):
+class ProductDeleteAPIView(generics.DestroyAPIView, StaffEditorPermissionMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
